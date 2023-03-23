@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -100,6 +101,20 @@ namespace Matrix2D
         public void Det()
         {
             Console.WriteLine(((A * D) - (C * B)));
+        }
+
+        public static explicit operator Matrix2D(int[,] matrix)
+        {
+            if(matrix == null)  throw new ArgumentException("null");
+
+            if (matrix.GetLength(0) != 2 || matrix.GetLength(1) != 2) throw new ArgumentException("zly rozmiar");
+
+            return new Matrix2D(matrix[0, 0], matrix[0, 1], matrix[1, 0], matrix[1, 1]);
+        }
+
+        public static explicit operator int[,](Matrix2D matrix)
+        {
+            return new int [2,2] { { matrix.A, matrix.B }, { matrix.C, matrix.D } };
         }
 
         
