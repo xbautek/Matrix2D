@@ -117,6 +117,81 @@ namespace Matrix2D
             return new int [2,2] { { matrix.A, matrix.B }, { matrix.C, matrix.D } };
         }
 
-        
+        // 2 4 7 9
+
+
+        ///<summary>
+        ///Format example ----> Matrix.Parse("[[23,2],[31,773]]")
+        ///</summary>
+        public static Matrix2D Parse(string s)
+        {
+            int count = 1;
+
+            foreach (char charek in s)
+            {
+                //             Matrix2D s = Matrix2D.Parse("[[2,2],[3,3]]");
+
+                if (!char.IsDigit(charek))
+                {
+                    if(count>9)
+                        throw new ArgumentException("zle cos dales taki format ma byc: [[2, 1],[3, 2]]");
+
+                    if (count == 1 || count == 2 || count == 6)
+                    {
+                        if(!(charek == '['))
+                        throw new ArgumentException("zle cos dales taki format ma byc: [[2, 1],[3, 2]]");
+                        else
+                        {
+                            count++;
+                            continue;
+                        }
+                    }
+
+                    if (count == 4 || count == 8 || count == 9)
+                    {
+                        if (!(charek == ']'))
+                            throw new ArgumentException("zle cos dales taki format ma byc: [[2, 1],[3, 2]]");
+                        else
+                        {
+                            count++;
+                            continue;
+                        }
+                    }
+                    if (count == 3 || count == 5 || count == 7)
+                    {
+                        if (!(charek == ','))
+                            throw new ArgumentException("zle cos dales taki format ma byc: [[2, 1],[3, 2]]");
+                        else
+                        {
+                            count++;
+                            continue;
+                        }
+                    }
+                }
+            }
+            string rest ="";
+            for(int i = 0; i<s.Length; i++)
+            {
+                if (char.IsDigit(s[i]) || (s[i]) == ',')
+                {
+                    rest += s[i];
+                }
+            }
+
+            
+            
+
+            int[] x = rest.Split(',').Select(int.Parse).ToArray();
+
+
+
+
+            if (x.Length != 4)
+            {
+                throw new ArgumentException("zle cos dales taki format ma byc: [[2, 1],[3, 2]]");
+            }
+
+            return new(x[0], x[1], x[2], x[3]);
+        }
     }
 }
